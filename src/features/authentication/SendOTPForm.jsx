@@ -5,35 +5,20 @@ import { getOtp } from "../../services/authService";
 import toast from "react-hot-toast";
 import Loader from "../../ui/Loader";
 
-function SendOTPForm({ setStep, phoneNumber, onChange }) {
-  const { isPending, data, error, mutateAsync } = useMutation({
-    mutationFn: getOtp,
-  });
-
-  const sendOtpHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const data = await mutateAsync({ phoneNumber });
-      setStep(2);
-      toast.success(data.message);
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-    }
-  };
-
+function SendOTPForm({ isSendingOtp, onSubmit, phoneNumber, onChange }) {
   return (
     <div>
       <p className="font-bold text-3xl text-center text-secondary-400 mb-5">
         فریلنسرینگ
       </p>
-      <form className="space-y-6" onSubmit={sendOtpHandler}>
+      <form className="space-y-6" onSubmit={onSubmit}>
         <TextField
           label="لطفا شماره موبایل خود را وارد کنید"
           name="phonenumber"
           value={phoneNumber}
           onChange={onChange}
         />
-        {isPending ? (
+        {isSendingOtp ? (
           <Loader />
         ) : (
           <button type="submit" className="w-full btn btn--primary  ">
