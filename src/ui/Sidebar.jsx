@@ -32,7 +32,7 @@ function CustomSideBar({ children, url }) {
       to={url}
       className={({ isActive }) =>
         isActive
-          ? `${navLinkClass} bg-primary-100 text-primary-900`
+          ? `${navLinkClass} text-primary-800 bg-primary-100 `
           : `${navLinkClass} text-secondary-600`
       }
     >

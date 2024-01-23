@@ -1,8 +1,4 @@
-import { useState } from "react";
 import TextField from "../../ui/TextField";
-import { useMutation } from "@tanstack/react-query";
-import { getOtp } from "../../services/authService";
-import toast from "react-hot-toast";
 import Loader from "../../ui/Loader";
 
 function SendOTPForm({ isSendingOtp, onSubmit, phoneNumber, onChange }) {

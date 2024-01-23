@@ -5,11 +5,11 @@ import { checkOtp } from "../../services/authService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
-import { MdTextsms } from "react-icons/md";
+import Loader from "../../ui/Loader";
 
-const RESEND_TIME = 5;
+const RESEND_TIME = 60;
 
-function CheckOTPForm({ phoneNumber, onBack, onResendOtp }) {
+function CheckOTPForm({ phoneNumber, onBack, onResendOtp, otpResponse }) {
   const [otp, setOtp] = useState("");
   const [time, setTime] = useState(RESEND_TIME);
   const navigate = useNavigate();
@@ -32,19 +32,23 @@ function CheckOTPForm({ phoneNumber, onBack, onResendOtp }) {
     e.preventDefault();
 
     try {
-      const { message, user } = await mutateAsync({ phoneNumber, otp });
-      if (!user.isActive) return navigate("/complete-profile");
-      if (user.status !== 2) {
+      const { data } = await mutateAsync({ phoneNumber, otp });
+
+      toast.success(data?.message);
+
+      if (!data?.user?.isActive) return navigate("/complete-profile");
+      if (data?.user?.status !== 2) {
         navigate("/");
         toast("پروفایل شما در انتظار تایید است", {
           icon: "✔",
         });
         return;
+      } else {
+        if (data?.user?.role === "OWNER") return navigate("/owner");
+        if (data?.user?.role === "FREELANCER") return navigate("/freelancer");
       }
-      if (user.role === "OWNER") return navigate("/owner");
-      if (user.role === "FREELANCER") return navigate("/freelancer");
-      toast.success(message);
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   };
@@ -59,6 +63,7 @@ function CheckOTPForm({ phoneNumber, onBack, onResendOtp }) {
         <p className="font-bold text-secondary-800 text-center ">
           کد تایید را وارد کنید
         </p>
+        {otpResponse && <p>{otpResponse?.message}</p>}
         <OTPInput
           value={otp}
           onChange={setOtp}
@@ -75,7 +80,13 @@ function CheckOTPForm({ phoneNumber, onBack, onResendOtp }) {
             fontFamily: "Vazir",
           }}
         />
-        <button className="btn btn--primary w-full">تایید</button>
+        {isPending ? (
+          <Loader />
+        ) : (
+          <button type="submit" className="w-full btn btn--primary  ">
+            تایید
+          </button>
+        )}
       </form>
       <div className="flex justify-between mt-6">
         <button

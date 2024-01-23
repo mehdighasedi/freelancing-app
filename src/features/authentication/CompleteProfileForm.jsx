@@ -21,18 +21,20 @@ function CompleteProfileForm() {
     e.preventDefault();
 
     try {
-      const { message, user } = await mutateAsync({ name, email, role });
-      if (user.status !== 2) {
+      const { data } = await mutateAsync({ name, email, role });
+
+      toast.success(data?.message);
+      if (data?.user?.status !== 2) {
         navigate("/");
         toast("پروفایل شما در انتظار تایید است", {
           icon: "✔",
         });
         return;
       }
-      if (user.role === "OWNER") return navigate("/owner");
-      if (user.role === "FREELANCER") return navigate("/freelancer");
-      toast.success(message);
+      if (data?.user?.role === "OWNER") return navigate("/owner");
+      if (data?.user?.role === "FREELANCER") return navigate("/freelancer");
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   };
