@@ -3,7 +3,7 @@ import { getOwnerProjectsApi } from "../../services/projectService";
 
 export default function useOwnerProjects() {
     const { isLoading, data } = useQuery({
-        queryKey: ["projects"],
+        queryKey: ["owner-projects"],
         queryFn: getOwnerProjectsApi,
     })
 

@@ -1,6 +1,8 @@
 import { HiOutlineX } from "react-icons/hi";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 function Modal({ open, title, onClose, children }) {
+  const ref = useOutsideClick(onClose);
   return (
     open && (
       <div
@@ -10,10 +12,11 @@ function Modal({ open, title, onClose, children }) {
       z-50"
       >
         <div
+          ref={ref}
           className="fixed top-1/2 left-1/2 
         -translate-x-1/2 -translate-y-1/2
         rounded-lg shadow-lg bg-secondary-0 p-4 transition-all duration-300 ease-out
-         w-64"
+         w-[calc(100vw - 3rem)] md:max-w-lg max-h-[calc(100vh - 5rem)] overflow-x-auto"
         >
           <div
             className="flex justify-between items-center 
