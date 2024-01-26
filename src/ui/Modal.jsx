@@ -16,7 +16,7 @@ function Modal({ open, title, onClose, children }) {
           className="fixed top-1/2 left-1/2 
         -translate-x-1/2 -translate-y-1/2
         rounded-lg shadow-lg bg-secondary-0 p-4 transition-all duration-300 ease-out
-         w-[calc(100vw - 3rem)] md:max-w-lg max-h-[calc(100vh - 5rem)] overflow-x-auto"
+         w-[calc(100vw-3rem)] md:max-w-lg max-h-[calc(100vh-5rem)] overflow-y-auto"
         >
           <div
             className="flex justify-between items-center 
