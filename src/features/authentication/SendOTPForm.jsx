@@ -1,7 +1,7 @@
 import TextField from "../../ui/TextField";
 import Loader from "../../ui/Loader";
 
-function SendOTPForm({ isSendingOtp, onSubmit, phoneNumber, onChange }) {
+function SendOTPForm({ isSendingOtp, onSubmit, register }) {
   return (
     <div>
       <p className="font-bold text-3xl text-center text-secondary-400 mb-5">
@@ -11,8 +11,10 @@ function SendOTPForm({ isSendingOtp, onSubmit, phoneNumber, onChange }) {
         <TextField
           label="لطفا شماره موبایل خود را وارد کنید"
           name="phonenumber"
-          value={phoneNumber}
-          onChange={onChange}
+          register={register}
+
+          // value={phoneNumber}
+          // onChange={onChange}
         />
         {isSendingOtp ? (
           <Loader />
