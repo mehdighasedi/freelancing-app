@@ -4,19 +4,40 @@ import RHFSelect from "../../ui/RHFSelect";
 import { TagsInput } from "react-tag-input-component";
 import { useState } from "react";
 import DatePickerField from "../../ui/DatePickerField";
+import useCategory from "../../hooks/useCategory";
+import useCreateProject from "./useCreateProject";
+import Loader from "../../ui/Loader";
 
-function CreateProjectForm() {
+function CreateProjectForm({ onClose }) {
   const [tags, setTags] = useState([]);
   const [date, setDate] = useState(new Date());
 
+  const { categories } = useCategory();
+
+  console.log(categories);
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
 
+  const { createProject, isCreatingProject } = useCreateProject();
+
   const onSubmit = (data) => {
-    console.log(data);
+    const newProject = {
+      ...data,
+      tags,
+      deadline: new Date(date).toISOString(),
+    };
+
+    console.log(newProject);
+    createProject(newProject, {
+      onSuccess: () => {
+        onClose();
+        reset();
+      },
+    });
   };
   return (
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -45,8 +66,8 @@ function CreateProjectForm() {
         validationSchema={{
           required: "توضیحات ضروری است",
           minLength: {
-            value: 10,
-            message: "طول توضیحات نباید کمتر از 10 باشد",
+            value: 15,
+            message: "طول توضیحات نباید کمتر از 15 باشد",
           },
         }}
         errors={errors}
@@ -59,10 +80,6 @@ function CreateProjectForm() {
         required
         validationSchema={{
           required: "بودجه ضروری است",
-          minLength: {
-            value: 5,
-            message: "طول توضیحات نباید کمتر از 5 باشد",
-          },
         }}
         errors={errors}
       />
@@ -70,7 +87,7 @@ function CreateProjectForm() {
         label="دسته بندی"
         name="category"
         register={register}
-        options={[]}
+        options={categories}
         required
       />
       <div>
@@ -83,9 +100,15 @@ function CreateProjectForm() {
         />
       </div>
       <DatePickerField date={date} setDate={setDate} label="ددلاین" />
-      <button type="submit" className="btn btn--primary w-full">
-        تایید
-      </button>
+      <div className="!mt-8">
+        {isCreatingProject ? (
+          <Loader />
+        ) : (
+          <button type="submit" className="btn btn--primary w-full">
+            تایید
+          </button>
+        )}
+      </div>
     </form>
   );
 }

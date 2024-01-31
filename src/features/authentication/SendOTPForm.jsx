@@ -12,7 +12,6 @@ function SendOTPForm({ isSendingOtp, onSubmit, register }) {
           label="لطفا شماره موبایل خود را وارد کنید"
           name="phonenumber"
           register={register}
-
           // value={phoneNumber}
           // onChange={onChange}
         />
