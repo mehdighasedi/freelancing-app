@@ -7,10 +7,35 @@ import DatePickerField from "../../ui/DatePickerField";
 import useCategory from "../../hooks/useCategory";
 import useCreateProject from "./useCreateProject";
 import Loader from "../../ui/Loader";
+import useEditProject from "./useEditProject";
 
-function CreateProjectForm({ onClose }) {
-  const [tags, setTags] = useState([]);
-  const [date, setDate] = useState(new Date());
+function CreateProjectForm({ onClose, projectToEdit }) {
+  const { _id: editId } = projectToEdit;
+
+  const isEditSession = Boolean(editId);
+  const {
+    title,
+    description,
+    budget,
+    deadline,
+    category,
+    tags: prevTags,
+  } = projectToEdit;
+
+  let editValues = {};
+
+  if (isEditSession) {
+    editValues = {
+      title,
+      description,
+      budget,
+      deadline,
+      category: category._id,
+    };
+  }
+
+  const [tags, setTags] = useState(prevTags || []);
+  const [date, setDate] = useState(new Date(deadline || ""));
 
   const { categories } = useCategory();
 
@@ -20,9 +45,10 @@ function CreateProjectForm({ onClose }) {
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm();
+  } = useForm({ defaultValues: editValues });
 
   const { createProject, isCreatingProject } = useCreateProject();
+  const { isEditingProject, editProject } = useEditProject();
 
   const onSubmit = (data) => {
     const newProject = {
@@ -30,14 +56,25 @@ function CreateProjectForm({ onClose }) {
       tags,
       deadline: new Date(date).toISOString(),
     };
-
+    if (isEditSession) {
+      editProject(
+        { id: editId, newProject },
+        {
+          onSuccess: () => {
+            onClose();
+            reset();
+          },
+        }
+      );
+    } else {
+      createProject(newProject, {
+        onSuccess: () => {
+          onClose();
+          reset();
+        },
+      });
+    }
     console.log(newProject);
-    createProject(newProject, {
-      onSuccess: () => {
-        onClose();
-        reset();
-      },
-    });
   };
   return (
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
