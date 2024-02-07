@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 
 function AuthContainer() {
+  const [step, setStep] = useState(1);
   const { register, handleSubmit, getValues } = useForm();
 
   const {
@@ -18,19 +19,15 @@ function AuthContainer() {
   });
 
   const sendOtpHandler = async (data) => {
-    // e.preventDefault();
     try {
-      const { message } = await mutateAsync({ data });
+      const { message } = await mutateAsync(data);
       setStep(2);
-      console.log(data);
+      console.log(message);
       toast.success(message);
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
   };
-
-  const [step, setStep] = useState(1);
-  // const [phoneNumber, setPhoneNumber] = useState("");
 
   const renderStep = () => {
     switch (step) {
@@ -40,6 +37,7 @@ function AuthContainer() {
             isSendingOtp={isSendingOtp}
             onSubmit={handleSubmit(sendOtpHandler)}
             register={register}
+
             // phoneNumber={phoneNumber}
             // onChange={(e) => setPhoneNumber(e.target.value)}
           />
@@ -50,7 +48,7 @@ function AuthContainer() {
             onResendOtp={sendOtpHandler}
             phoneNumber={getValues("phoneNumber")}
             otpResponse={otpResponse}
-            onBack={(e) => setStep(1)}
+            onBack={(e) => setStep((s) => s - 1)}
           />
         );
       default:

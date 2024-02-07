@@ -25,21 +25,19 @@ function CompleteProfileForm() {
   });
 
   const onSubmit = async (data) => {
-    // e.preventDefault();
-
     try {
-      const { user, message } = await mutateAsync({ data });
+      const { user, message } = await mutateAsync(data);
 
       toast.success(message);
-      if (user?.status !== 2) {
+      if (Number(user.status) !== 2) {
         navigate("/");
         toast("پروفایل شما در انتظار تایید است", {
           icon: "✔",
         });
         return;
       }
-      if (user?.role === "OWNER") return navigate("/owner");
-      if (user?.role === "FREELANCER") return navigate("/freelancer");
+      if (user.role === "OWNER") return navigate("/owner");
+      if (user.role === "FREELANCER") return navigate("/freelancer");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -76,9 +74,6 @@ function CompleteProfileForm() {
               },
             }}
             errors={errors}
-
-            // onChange={(e) => setEmail(e.target.value)}
-            // value={email}
           />
           <div className="flex items-center justify-center gap-x-10 p-4">
             <RadioInputGroup

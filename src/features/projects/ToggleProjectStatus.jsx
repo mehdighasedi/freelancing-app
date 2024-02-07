@@ -9,17 +9,13 @@ function ToggleProjectStatus({ project }) {
 
   const { isUpdating, toggleProject } = useToggleProjectStatus();
   const toggleHandler = () => {
-    toggleProject(
-      { id: project._id, status },
-      {
-        onSuccess: () => {},
-      }
-    );
+    const newStatus = status === "OPEN" ? "CLOSED" : "OPEN";
+    toggleProject({ id: project._id, data: { status: newStatus } });
   };
   return (
-    <div className="w-[5rem]">
+    <div className="w-[8rem]">
       {isUpdating ? (
-        <Loader />
+        <Loader height={20} width={50} />
       ) : (
         <Toggle
           onChange={toggleHandler}

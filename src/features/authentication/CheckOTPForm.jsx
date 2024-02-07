@@ -32,20 +32,20 @@ function CheckOTPForm({ phoneNumber, onBack, onResendOtp, otpResponse }) {
     e.preventDefault();
 
     try {
-      const { data } = await mutateAsync({ phoneNumber, otp });
+      const { user, message } = await mutateAsync({ phoneNumber, otp });
 
-      toast.success(data?.message);
+      toast.success(message);
 
-      if (!data?.user?.isActive) return navigate("/complete-profile");
-      if (data?.user?.status !== 2) {
+      if (!user.isActive) return navigate("/complete-profile");
+      if (Number(user.status) !== 2) {
         navigate("/");
         toast("پروفایل شما در انتظار تایید است", {
           icon: "✔",
         });
         return;
       } else {
-        if (data?.user?.role === "OWNER") return navigate("/owner");
-        if (data?.user?.role === "FREELANCER") return navigate("/freelancer");
+        if (user.role === "OWNER") return navigate("/owner");
+        if (user.role === "FREELANCER") return navigate("/freelancer");
       }
     } catch (error) {
       console.log(error);
@@ -63,7 +63,7 @@ function CheckOTPForm({ phoneNumber, onBack, onResendOtp, otpResponse }) {
         <p className="font-bold text-secondary-800 text-center ">
           کد تایید را وارد کنید
         </p>
-        {otpResponse && <p>{otpResponse?.message}</p>}
+
         <OTPInput
           value={otp}
           onChange={setOtp}

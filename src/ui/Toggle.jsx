@@ -3,8 +3,12 @@ import { Switch } from "@headlessui/react";
 function Toggle({ enabled, onChange, label }) {
   return (
     <Switch.Group>
-      <div className="flex items-center">
-        <Switch.Label className="mr-4">{label}</Switch.Label>
+      <div className="flex items-center gap-x-2">
+        <Switch.Label
+          className={`badge ${enabled ? "badge--success" : "badge--danger"}`}
+        >
+          {label}
+        </Switch.Label>
         <Switch
           checked={enabled}
           onChange={onChange}
