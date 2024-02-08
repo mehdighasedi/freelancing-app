@@ -19,7 +19,7 @@ function Toggle({ enabled, onChange, label }) {
           <span
             className={`${
               enabled ? "-translate-x-6" : "-translate-x-1"
-            } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+            } inline-block h-4 w-4 transform rounded-full bg-secondary-0 transition-transform`}
           />
         </Switch>
       </div>

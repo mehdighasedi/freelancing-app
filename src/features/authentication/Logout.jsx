@@ -7,7 +7,7 @@ function Logout() {
   return isPending ? (
     <Loader />
   ) : (
-    <button onClick={logout}>
+    <button onClick={logout} content="خروج از حساب کاربری">
       <MdOutlineLogout className="h-6 w-6 text-primary-800 hover:text-error" />
     </button>
   );
