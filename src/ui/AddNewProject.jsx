@@ -19,7 +19,10 @@ function AddNewProject() {
         title="اضافه کردن پروژه جدید"
         onClose={() => setAddNewOpen(false)}
       >
-        <CreateProjectForm onClose={() => setAddNewOpen(false)} />
+        <CreateProjectForm
+          onClose={() => setAddNewOpen(false)}
+          projectToEdit={() => {}}
+        />
       </Modal>
     </div>
   );
