@@ -92,7 +92,7 @@
     @apply border border-rose-700 text-rose-700;
   }
   .badge {
-    @apply inline-block whitespace-nowrap rounded-xl px-2 py-0.5;
+    @apply inline-block whitespace-nowrap rounded-xl px-2 py-0.5 ;
   }
   .badge--primary {
     @apply bg-primary-900 text-white;
@@ -178,7 +178,6 @@ table th {
   border-bottom: 1px solid rgb(var(--color-secondary-200));
   text-align: right;
   white-space: nowrap;
-  
 }
 
 table th {

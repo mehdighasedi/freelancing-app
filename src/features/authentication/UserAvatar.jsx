@@ -1,8 +1,16 @@
 import useUser from "./useUser";
 
+const roles = {
+  FREELANCER: "فریلنسر",
+
+  ADMIN: "مدیر",
+
+  OWNER: "کارفرما",
+};
+
 function UserAvatar() {
   const { user } = useUser();
-  console.log(user);
+
   return (
     <div className="flex items-center gap-2 text-secondary-500 ">
       <img
@@ -10,7 +18,10 @@ function UserAvatar() {
         src="/user.jpg"
         alt="user-account"
       />
-      <span>{user?.name}</span>
+      <div className="flex flex-col justify-center items-center">
+        <span>{user?.name}</span>
+        <span className="text-[11px]">{roles[user?.role]}</span>
+      </div>
     </div>
   );
 }

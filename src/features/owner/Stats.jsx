@@ -3,11 +3,15 @@ import {
   HiCurrencyDollar,
   HiOutlineViewGrid,
 } from "react-icons/hi";
-import Stat from "./stat";
+import Stat from "../../ui/Stat";
+
+import { toPersianNumbers } from "../../utils/toPersianNumbers";
 
 function Stats({ projects }) {
   const numOfProjects = projects.length;
-  const numOfProcessedProjects = projects.map((pro) => pro.status === 2).length;
+  const numOfProcessedProjects = projects.filter(
+    (pro) => pro.status === 2
+  ).length;
 
   const numOfProposals = projects.reduce(
     (acc, curr) => curr.proposals.length + acc,
@@ -19,19 +23,19 @@ function Stats({ projects }) {
       <Stat
         icon={<HiOutlineViewGrid className="w-20 h-20" />}
         title="پروژه ها"
-        value={numOfProjects}
+        value={toPersianNumbers(numOfProjects)}
         color="primary"
       />
       <Stat
         icon={<HiCurrencyDollar className="w-20 h-20" />}
         title="پروژه های واگذار شده"
-        value={numOfProcessedProjects}
+        value={toPersianNumbers(numOfProcessedProjects)}
         color="green"
       />
       <Stat
         icon={<HiCollection className="w-20 h-20" />}
         title="درخواست ها"
-        value={numOfProposals}
+        value={toPersianNumbers(numOfProposals)}
         color="blue"
       />
     </div>

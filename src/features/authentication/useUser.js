@@ -9,6 +9,6 @@ export default function useUser() {
     })
     const { user } = data || {};
 
-    console.log(data || {});
+
     return { isLoading, user };
 }

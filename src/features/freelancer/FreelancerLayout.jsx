@@ -1,9 +1,9 @@
 import { HiCollection, HiHome } from "react-icons/hi";
 import AppLayout from "../../ui/AppLayout";
-import Sidebar from "../../ui/Sidebar";
 import CustomNavLink from "../../ui/CustomSidebar";
+import Sidebar from "../../ui/Sidebar";
 
-function OwnerLayout() {
+function FreelancerLayout() {
   return (
     <AppLayout>
       <Sidebar>
@@ -15,9 +15,13 @@ function OwnerLayout() {
           <HiCollection />
           <span>پروژه ها</span>
         </CustomNavLink>
+        <CustomNavLink url="proposals">
+          <HiCollection />
+          <span>درخواست ها</span>
+        </CustomNavLink>
       </Sidebar>
     </AppLayout>
   );
 }
 
-export default OwnerLayout;
+export default FreelancerLayout;
