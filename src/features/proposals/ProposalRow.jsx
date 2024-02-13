@@ -28,8 +28,10 @@ function ProposalRow({ proposal, index }) {
       <td>{truncateText(description, 60)}</td>
       <td>{toPersianNumbers(duration)} روز</td>
       <td>{toPersianNumbersWithComma(price)} تومان </td>
-      <td className={`badge mt-[.8rem] ${statusStyle[status].className}`}>
-        {statusStyle[status].label}
+      <td>
+        <span className={`badge ${statusStyle[status].className}`}>
+          {statusStyle[status].label}
+        </span>
       </td>
     </Table.Row>
   );

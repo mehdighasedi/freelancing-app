@@ -34,12 +34,10 @@ function ProposalRow({ proposal, index }) {
       <td>{truncateText(proposal.description, 50)}</td>
       <td>{toPersianNumbers(proposal.duration)} روز</td>
       <td> {toPersianNumbersWithComma(proposal.price)} تومان</td>
-      <td
-        className={`badge mt-[1.2rem] ${
-          statusStyle[proposal.status].className
-        }`}
-      >
-        {statusStyle[proposal.status].label}
+      <td>
+        <span className={`badge  ${statusStyle[proposal.status].className}`}>
+          {statusStyle[proposal.status].label}
+        </span>
       </td>
       <td>
         <button onClick={() => setOpen(true)} className="btn btn--secondary">
@@ -51,7 +49,7 @@ function ProposalRow({ proposal, index }) {
           title="تغییر وضعیت درخواست"
         >
           <ChangeProposalStatus
-            proposal={proposal}
+            proposalId={proposal._id}
             onClose={() => setOpen(false)}
           />
         </Modal>

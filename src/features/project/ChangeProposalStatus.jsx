@@ -20,7 +20,7 @@ const options = [
   },
 ];
 
-function ChangeProposalStatus({ proposal, onClose }) {
+function ChangeProposalStatus({ proposalId, onClose }) {
   const { register, handleSubmit } = useForm();
   const { isChangingProposalStatus, changeProposalStatus } =
     useChangeProposalStatus();
@@ -29,7 +29,7 @@ function ChangeProposalStatus({ proposal, onClose }) {
 
   const changeProposalHandler = (data) => {
     changeProposalStatus(
-      { id: proposal._id, data: data },
+      { proposalId, projectId, ...data },
       {
         onSuccess: () => {
           onClose();
