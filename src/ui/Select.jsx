@@ -3,7 +3,7 @@ function Select({ value, onChange, options }) {
     <select
       value={value}
       onChange={onChange}
-      className="textField__input text-sm p-2 bg-secondary-0"
+      className="textField__input text-sm py-2 bg-secondary-0"
     >
       {options.map((item) => (
         <option key={item.value} value={item.value}>
