@@ -3,7 +3,7 @@ import Select from "./Select";
 
 function FilterDropDown({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const value = searchParams.get(filterField);
+  const value = searchParams.get(filterField) || "";
 
   const handleChange = (e) => {
     searchParams.set(filterField, e.target.value);
